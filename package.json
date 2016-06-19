@@ -15,7 +15,7 @@
     "less-middleware": "1.0.x",
     "morgan": "~1.6.1",
     "multiparty": "^4.1.2",
-    "mysql": "^2.11.1",
+    "mysql": "^2.11.1"
   },
   "description": "> 基于node express4.x web框架搭建",
   "main": "app.js",
