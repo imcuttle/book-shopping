@@ -2,7 +2,7 @@
  * Created by Yc on 2016/6/17.
  */
 
-!function(){
+(function(){
     function startChart(elem,option) {
         elem.style.height = (elem.dataset.height || 400) + 'px';
         var chart = echarts.init(elem);
@@ -132,7 +132,7 @@
     }
     else
         line.innerHTML='<big class="text-danger">没有相关信息</big>';
-}()
+}())
 
 /*//line
 

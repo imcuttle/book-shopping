@@ -1,7 +1,7 @@
 /**
  * Created by Yc on 2016/6/18.
  */
-!function () {
+(function () {
     var pops = $('[data-popImage]');
     pops.each(function(){
         // var img = new Image();
@@ -18,4 +18,4 @@
         })
     })
 
-}();
+})();

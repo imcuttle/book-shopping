@@ -85,10 +85,10 @@ jQuery.moyuConfirm = function (content,onok,oncancel,title) {
             onok();
     });
     $(window).resize();
-}
+};
 
 
-!function ($) {
+(function ($) {
     $('[data-delete]').click(function (e) {
         var info = JSON.parse(this.dataset.delete),
             what = this.dataset.deletewhat,
@@ -106,4 +106,4 @@ jQuery.moyuConfirm = function (content,onok,oncancel,title) {
         })
     });
 
-}(jQuery);
+})(jQuery);

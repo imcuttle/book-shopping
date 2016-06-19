@@ -4,7 +4,7 @@
 
 
 
-!function(doc,win){
+(function(doc,win){
     var input = doc.getElementById('msg');
     var show  = doc.getElementById('msg-show');
     input.placeholder = ['1. 支持 MarkDown 语法','2. 自动保存','3. 支持网络多张图片粘贴'].join('\r\n\r\n');
@@ -84,4 +84,4 @@
         var md = this.dataset.md;
         this.innerHTML = marked(md,{renderer:renderer});
     })
-}(document,window);
+})(document,window);

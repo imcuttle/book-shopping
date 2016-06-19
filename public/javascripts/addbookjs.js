@@ -1,7 +1,7 @@
 /**
  * Created by Yc on 2016/6/17.
  */
-!function (d,w) {
+(function (d,w) {
     var fileImg = d.getElementById('image');
     var alertContainer = d.getElementById('alert');
     var thumb = d.getElementById('thumbnail');
@@ -19,8 +19,7 @@
             thumb.src = fr.result;
         }
     };
-
-}(document,window);
+})(document,window);
 
 /*
  $.ajax({
