@@ -11,9 +11,10 @@ block content
                         a(href='https://www.zybuluo.com/mdeditor',target='_blank')
                             span.text-primary Markdown
                         |编辑区
-                div.panel-body(contenteditable="false",style='height:460px;')
-                    textarea.text-primary(id='msg',name='msg',style='width:100%;height:100%;font-size:16px;',required)
+                div.panel-body(contenteditable="false")
+                    textarea.text-primary(id='msg',name='msg',style='width:100%;height:420px;font-size:16px;',required)
                 div.panel-footer
+                    button.btn.btn-default(onclick='return false;',role='bigger') Bigger
                     div.pull-right
                         div.btn-toolbar
                             input.btn.btn-default(type='submit',value='提交')

@@ -36,7 +36,7 @@ block content
               a.btn.btn-warning(href='/image/books/#{book.bookID}',target='_blank') 查看大图
               div.pull-right.text-danger
                 if(username!=null)
-                  a.btn.btn-default(style='margin-right:10px;',href='#comments') 评论
+                  a.btn.btn-default(style='margin-right:10px;',role='link-msg',href='#comments') 评论
                   if(username!=book.seller)
                     form(method='post',style='display:inline-block;margin-right:8px;')
                       input(type='hidden',value='buy',name='action')
