@@ -1,0 +1,74 @@
+
+
+@border-color : #e5e5e5;
+
+
+body {
+  //padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.footer{
+  margin-top: 20px;
+  border-top:1px solid @border-color;
+  padding: 50px;
+}
+
+.img-wf{
+  width:75%;
+  padding:0;
+  margin: auto;
+  list-style:none;
+}
+.img-wf li{
+  position:relative;
+  padding: 3px 1% 3px;
+  float:left;
+  width: 23%;
+}
+.img-wf li img{
+  width:100%;
+}
+.img-wf .img-item{
+  background-color:white;
+  padding: 4px;
+  margin-bottom: 15px;
+}
+.img-wf .img-item:hover{
+  transition: 0.4s;
+  transform:scale(1.05,1.05);
+  box-shadow: 6px 6px 3px gray;
+}
+
+@keyframes fadeIn {
+  0% {opacity: 0; /*初始状态 透明度为0*/}
+  100% {opacity: 1; /*结尾状态 透明度为1*/}
+}
+.animate{
+  animation:fadeIn 1.5s;
+}
+.img-wf:after{
+  content: '.';
+  display: block;
+  clear: left;
+  height: 0;
+  visibility: hidden;
+}
+.vertical-middle{
+  vertical-align: middle!important;
+}
+.vertical-bottom{
+  vertical-align: bottom!important;
+}
+@import "./bootstrap/bootstrap.less";
+
+@import "./markdown.less";
+@import "./hljs-github.min.css";
+
+main{
+  min-height: 600px;
+}

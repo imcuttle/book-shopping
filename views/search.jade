@@ -1,0 +1,99 @@
+//
+   Created by Yc on 2016/6/18.
+extends layout
+
+block content
+    -var typeusers = ['username','email'];
+    -var typeusersTexts = ['用户名','邮箱'].map((x)=>{return '根据'+x;});
+    -var typebooks = ['bookID','title','author','press'];
+    -var typebooksTexts = ['书号','书名','作者','出版社'].map((x)=>{return '根据'+x;});
+    form.form
+        div.form-group-lg.form-group(method='get')
+            div.input-group
+                input.form-control(type="text" placeholder="搜什么？",name='content',required,
+                value=param.content)
+                span.input-group-btn
+                    button.btn.btn-primary.btn-lg 搜索
+        ul.nav.nav-tabs.nav-justified(style='margin-bottom:15px;')
+            li(class=param.for=='users'?'active':'')
+                input.hidden(type='radio',checked='checked',name='for',value='users')
+                a(href='#users',aria-controls="home" role="tab") 搜用户
+            li(class=param.for=='books'?'active':'')
+                input.hidden(type='radio',name='for',value='books')
+                a(href='#books',aria-controls="home" role="tab") 搜图书
+        div.tab-content
+            div.tab-pane#users(role='tabpanel',class=param.for=='users'?'active':'')
+                div.row
+                    div.col-sm-6.col-md-3
+                        select#selectusers.form-control(name='typeusers',required)
+                         each x,i in typeusers
+                          option(value='#{x}') #{typeusersTexts[i]}
+                if(users == null)
+                    br
+                    big.text-info 点击搜索用户
+                else if(users.length==0)
+                    br
+                    big.text-danger 未找到符合要求的结果
+                else
+                    div.table-responsive
+                        table.table.table-striped
+                            thead
+                                tr
+                                    th #
+                                    th 用户名
+                                    th 电子邮箱
+                                    th 注册时间
+                            tbody
+                              each us,i in users
+                                tr
+                                    td #{i+1}
+                                    td #{us.username}
+                                    td #{us.email}
+                                    td #{us.registerDate}
+
+            div.tab-pane#books(role='tabpanel',class=param.for=='books'?'active':'')
+                div.row
+                    div.col-sm-6.col-md-3.pull-right
+                        select#selectbooks.form-control(name='typebooks',required)
+                         each x,i in typebooks
+                           option(value='#{x}') #{typebooksTexts[i]}
+                if(books==null)
+                    br
+                    big.text-info 点击搜索图书
+                else if(books.length==0)
+                    br
+                    big.text-danger 未找到符合要求的结果
+                else
+                  div.table-responsive
+                    table.table.table-striped
+                        thead
+                            tr
+                                th 书号
+                                th 书名
+                                th 作者
+                                th 出版社
+                                th 价格
+                                th 库存
+                                th 卖家
+                                th 其他
+                        tbody
+                          each book in books
+                            tr(data-popImage='/image/books/#{book.bookID}',data-pos='bottom')
+                                td #{book.bookID}
+                                td #{book.title}
+                                td #{book.author}
+                                td #{book.press}
+                                td #{book.price}
+                                td #{book.quantity}
+                                td #{book.seller}
+                                td
+                                  a.btn-link.btn-sm(href='/trade/books/#{book.bookID}') 查看
+    -var selected = typeusers.findIndex(v=>{return v==param.typeusers});
+    -selected=selected>=0?selected:0;
+    script document.getElementById('selectusers').children[#{selected}].selected = true;
+    -var selected = typebooks.findIndex(v=>{return v==param.typebooks});
+    -selected=selected>=0?selected:0;
+    script document.getElementById('selectbooks').children[#{selected}].selected = true;
+    script document.getElementsByName('for')[#{param.for=='users'?0:1}].checked = true;
+    script(src='/javascripts/searchjs.js')
+    script(src='/javascripts/popImage.js')

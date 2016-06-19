@@ -1,0 +1,33 @@
+//
+   Created by Yc on 2016/6/16.
+extends layout
+
+block content
+    div.row
+        div.col-lg-6.col-lg-offset-3
+          div.panel.panel-primary
+            div.panel-body
+                -if(code!=null) {
+                -var cls = code===0?'alert-danger':'alert-success';
+                div.alert(role="alert" class=cls)
+                    button.close(data-dismiss="alert" aria-label="Close")
+                        span(aria-hidden="true") &times;
+                    !=msgx.split('\n').join('<br>')
+                -}
+                form.form-horizontal(method='post')
+                    div.form-group
+                        label(for="user" class="col-sm-2 control-label") 账号
+                        div.col-sm-10
+                            input(type="text" class="form-control" name="user" id="user" minlength=6 maxlength=20 placeholder="用户名/邮箱" required
+                            value=param?param.user:''
+                            )
+                    div.form-group
+                        label(for="password" class="col-sm-2 control-label") 密码
+                        div.col-sm-10
+                            input(type="password" class="form-control" name="password" id="password" minlength='6' maxlength='12' placeholder="密码(6-12位)" required
+                            value=param?param.password:''
+                            )
+                    div.form-group
+                        div.col-sm-offset-2.col-sm-10
+                            div.text-right
+                                input.btn.btn-primary(type='submit',value='确认')

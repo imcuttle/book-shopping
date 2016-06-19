@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  div.btn-toolbar
+    a.btn.btn-primary(href='/') 返回首页
+    a.btn-group.btn.btn-primary(href='javascript:history.go(-1);') 返回
+  h2= message
+  -if(error.status)
+    h3= error.status
+  -if(error.stack)
+    pre #{error.stack}

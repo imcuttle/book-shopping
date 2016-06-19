@@ -1,0 +1,11 @@
+//
+   Created by Yc on 2016/6/17.
+extends addbook
+
+block part
+    div.form-group
+        label(for="bookID" class="col-sm-2 control-label") 书号
+        div.col-sm-10
+            input.disabled(type="text" class="form-control" name="bookID" id="bookID" required
+            value=param ? param.bookID : '' readonly
+            )

@@ -1,0 +1,54 @@
+//
+   Created by Yc on 2016/6/16.
+extends layout
+
+block content
+    div.row
+        div.col-lg-6.col-lg-offset-3
+          div.panel.panel-success
+            div.panel-body
+                -if(code!=null) {
+                -var cls = code===0?'alert-danger':'alert-success';
+                div.alert(role="alert" class=cls)
+                    button.close(data-dismiss="alert" aria-label="Close")
+                        span(aria-hidden="true") &times;
+                    !=msgx.split('\n').join('<br>')
+                -}
+                form.form-horizontal(method='post')
+                    div.form-group
+                        label(for="username" class="col-sm-2 control-label") 用户名
+                        div.col-sm-10
+                          input(type="text" class="form-control" name="username" id="username" minlength=6 maxlength=12 placeholder="用户名(6-12位)" required
+                            value=param?param.username:''
+                          )
+                    div.form-group
+                        label(for="email" class="col-sm-2 control-label") 电子邮箱
+                        div.col-sm-10
+                            input(type="email" class="form-control" name="email" id="email" maxlength=20 placeholder="电子邮箱" required
+                            value=param?param.email:''
+                            )
+                    div.form-group
+                        label(for="password" class="col-sm-2 control-label") 密码
+                        div.col-sm-10
+                            input(type="password" class="form-control" name="password" id="password" minlength='6' maxlength='12' placeholder="密码(6-12位)" required
+                            value=param?param.password:''
+                            )
+                    div.form-group
+                        label(for="password2" class="col-sm-2 control-label") 确认密码
+                        div.col-sm-10
+                            input(type="password" class="form-control" name="password2" id="password2" minlength='6' maxlength='12' placeholder="确认密码" required
+                            value=param?param.password2:''
+                            )
+                    div.form-group
+                        label(for="code" class="col-sm-2 control-label") 验证码
+                        div.col-sm-5
+                            div.input-group
+                                input(type="text" class="form-control" name="code" id="code" placeholder="验证码" required
+                                value=param?param.code:''
+                                )
+                                span.input-group-addon
+                                    img(alt='验证码')
+                    div.form-group
+                        div.col-sm-offset-2.col-sm-10
+                            div.text-right
+                                input.btn.btn-success(type='submit',value='确认')

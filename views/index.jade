@@ -1,0 +1,105 @@
+extends layout
+
+block content
+  -var username = req.session.username;
+  -var otherBooks = otherRecentBooks;
+  div.row
+    div.col-md-8
+      div.panel.panel-default
+        div.panel-heading
+          h3.panel-title 看看有什么书吧
+            //a.btn-link.pull-right.btn-sm#more-others(href='javascript:;' type='button',style='padding:0') 换一批
+        div.panel-body
+          if(otherBooks.length===0)
+            div.text-danger 对不起，好像没有其他卖家销售图书中。
+          else
+            div.row
+            -for(var i=0;i<otherBooks.length;i++){
+             -var rb=otherBooks[i];
+             div.col-sm-6
+              div.media
+                div.pull-left
+                  a(href="#",data-popImage='/image/books/#{rb.bookID}',data-pos='right')
+                    img(
+                    src="/image/books/#{rb.bookID}" alt="#{rb.bookID}",style="width: 80px; height: 80px;")
+                div.media-body(style='position:relative;')
+                  h4.media-heading #{rb.title}
+                  span 作者 #{rb.author}
+                  br
+                  span 价格 #{rb.price}元
+                  br
+                  span.hidden-xs 上架 #{rb.importDate}
+                  a.btn.btn-primary.vertical-bottom(style='position:absolute;bottom:0;right:0;'
+                    href='/trade/books/#{rb.bookID}') 查看
+                  br
+              if(i < (otherBooks.length%2==0?otherBooks.length-2:otherBooks.length-1))
+                hr
+            -}
+    div.col-md-4.hidden-xs.hidden-sm
+      div.panel.panel-default
+        div.panel-heading
+          h3.panel-title
+            a(data-toggle="collapse",href="#buyinfo",aria-expanded="true") 我的买书记录
+            if(typeof username !== 'undefined' && recentTrades.length!==0)
+              //a.btn-link.pull-right.btn-sm(href='javascript:;' type='button',style='padding:0') 换一批
+        div.panel-collapse.collapse.in#buyinfo
+          div.panel-body
+            if(typeof username === 'undefined')
+              div.text-danger 对不起，你还没有
+                a.btn-link(href='/login') 登录
+            else if(recentTrades.length === 0)
+              div.text-danger 对不起，你还没有买过图书。
+            else
+              each rb,i in recentTrades
+                div.media
+                  div.pull-left
+                    a(href="#",data-popImage='/image/trades/#{rb.tradeID}' data-pos='left')
+                      img(
+                      src="/image/trades/#{rb.tradeID}" alt="#{rb.bookID}",style="width: 64px; height: 64px;")
+                  div.media-body
+                    h4.media-heading
+                      a(href='/trade/books/#{rb.bookID}') #{rb.title}
+                    div.row
+                     span.col-xs-5 作者：#{rb.author}
+                     span.col-xs-7 出版社：#{rb.press}
+                     span.col-xs-5 价格：#{rb.price}
+                     span.col-xs-7 卖家：
+                      a(href='/users/#{rb.seller}') #{rb.seller}
+                     span.col-xs-12 购买日期：#{rb.tradeDate}
+                if(i !== recentTrades.length - 1)
+                  hr
+      div.panel.panel-default
+        div.panel-heading
+          h3.panel-title
+            a(data-toggle="collapse",href="#mybooks",aria-expanded="true") 我最近上架图书
+            if(typeof username !== 'undefined' && recentBooks.length!==0)
+              //a.btn-link.pull-right.btn-sm(href='javascript:;' type='button',style='padding:0') 换一批
+        div.panel-collapse.collapse.in#mybooks
+          div.panel-body
+            if(typeof username === 'undefined')
+              div.text-danger 对不起，你还没有
+                a.btn-link(href='/login') 登录
+            else if(recentBooks.length===0)
+              div.text-danger 对不起，你还没有上架的图书。快去
+                a.btn-link(href='/sell/addbook') 添加图书
+                |吧！
+            else
+              each rb,i in recentBooks
+                div.media
+                  div.pull-left
+                    a(href="#",data-popImage='/image/books/#{rb.bookID}',data-pos='left')
+                      img(
+                      src="/image/books/#{rb.bookID}" alt="#{rb.bookID}",style="width: 64px; height: 64px;")
+                  div.media-body
+                    h4.media-heading
+                      a(href='/trade/books/#{rb.bookID}') #{rb.title}
+                    span 作者 #{rb.author}
+                    br
+                    span 价格 #{rb.price}元
+                    a.pull-right(href='/sell/editbook/#{rb.bookID}') 编辑
+                    br
+                if(i!==recentBooks.length-1)
+                  hr
+
+  script(src='/javascripts/indexjs.js')
+  script(src='/javascripts/popImage.js')

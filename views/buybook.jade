@@ -1,0 +1,111 @@
+extends layout
+
+block content
+  -var username = req.session.username;
+  div.panel.panel-primary
+    div.panel-heading
+      h3.panel-title #{book.title}
+    div.panel-body
+      div.row
+        div.col-md-8
+          div.row
+            div.col-sm-5
+              img.img-rounded.img-responsive(style='height:300px;',src='/image/books/#{book.bookID}',data-popImage='/image/books/#{book.bookID}',data-pos='left')
+            div.col-sm-7.text-info
+              h3.col-sm-offset-1.text-danger #{book.title}
+              div.form-horizontal
+                div.form-group
+                  label.col-xs-3.control-label 书号：
+                  div.col-xs-9
+                    div.form-control-static #{book.bookID}
+                  label.col-xs-3.control-label 价格：
+                  div.col-xs-9
+                    div.form-control-static #{book.price}元
+                  label.col-xs-3.control-label 作者：
+                  div.col-xs-9
+                    div.form-control-static #{book.author}
+                  label.col-xs-3.control-label 库存：
+                  div.col-xs-9
+                    div.form-control-static #{book.quantity}本
+                  label.col-xs-3.control-label 卖家：
+                  div.col-xs-9
+                    div.form-control-static #{book.seller}
+                  label.col-xs-3.control-label 上架日期：
+                  div.col-xs-9
+                    div.form-control-static #{book.importDate}
+              a.btn.btn-warning(href='/image/books/#{book.bookID}',target='_blank') 查看大图
+              div.pull-right.text-danger
+                if(username!=null)
+                  a.btn.btn-default(style='margin-right:10px;',href='#comments') 评论
+                  if(username!=book.seller)
+                    form(method='post',style='display:inline-block;margin-right:8px;')
+                      input(type='hidden',value='buy',name='action')
+                      button.btn.btn-success 购买
+                    //form(method='post',style='display:inline-block;')
+                    //  input(type='hidden',value='indirect',name='act')
+                    //  button.btn.btn-success 添加至购物车
+                  else
+                    |本书是你自己的！
+                else
+                  a(href='/login') 登录
+                  |后才能购买评论
+        div.col-md-4.hidden-sm.hidden-xs
+          div.panel.panel-info
+            div.panel-body
+              if(recentTrades==null || recentTrades.length==0)
+                p.text-info 暂时还没人下手哦，你快下手吧！
+              else
+                each td in recentTrades
+                  p.text-info
+                    |#{td.tradeDate},
+                    a(href='/users/#{td.buyer}',target='_blank') #{td.buyer}
+                    !=' 购买了一本！'
+  div.panel.panel-info
+    div.panel-heading
+      h3.panel-title
+        a(data-toggle="collapse" aria-expanded="true" href='#allcoments') 看看别人怎么评价的吧
+    div.panel-collapse.collapse.in#allcoments
+      div.panel-body
+       if(comments==null || comments.length==0)
+        big.text-info 暂无评论
+       else
+        each c,i in comments
+         div.row
+          a(id='#{c.username}#{c.datetime}')
+          div.col-xs-2
+            h4
+              small.hidden-xs.hidden-sm #{c.datetime}
+              br
+              a(href='/users/#{c.username}') #{c.username}
+              span.hidden-xs.hidden-sm 说
+          div.col-xs-10
+            div.markdown-body(data-md='#{c.content}')
+         if(i!=comments.length-1)
+          hr
+  div.row
+    div.col-md-6
+      a#comments
+      form.panel.panel-default(method='post')
+        input(type='hidden',name='action',value='comment')
+        div.panel-heading
+          h3.panel-title
+            a(href='https://www.zybuluo.com/mdeditor',target='_blank')
+              span.text-primary Markdown
+            | 编辑区
+        div.panel-body(contenteditable="false",style='height:460px;')
+          textarea.text-primary(id='msg',name='content',data-tag='comment-#{book.bookID}',style='width:100%;height:100%;font-size:16px;')
+        div.panel-footer
+          div.pull-right
+            div.btn-toolbar
+              input.btn.btn-default(type='submit',value='提交')
+          div.clearfix
+    div.col-md-6
+      div.panel.panel-default
+        div.panel-heading
+          h3.panel-title 预览
+        div.panel-body.markdown-body(style='height:100%;',id='msg-show')
+
+  script(src="http://cdn.bootcss.com/marked/0.3.5/marked.min.js")
+  script(src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js")
+  script(src='/javascripts/msgjs.js')
+  script(src='/javascripts/popImage.js')

@@ -1,0 +1,89 @@
+//
+   Created by Yc on 2016/6/17.
+extends layout
+
+block content
+    ul.nav.nav-pills.nav-justified(style='margin-bottom:10px;')
+        li.active
+            a(href='#sellinfo',aria-controls="home" role="tab" data-toggle="tab") 销售情况
+        li
+            a(href='#sellbooks',aria-controls="home" role="tab" data-toggle="tab") 我的图书
+    div.tab-content
+        div.tab-pane#sellbooks(role='tabpanel')
+            p.text-justify
+                span 共有 #{books.length} 本书
+                a.pull-right.btn.btn-lg.btn-default(href='/sell/addbook') 添加图书
+                span.clearfix
+            -if(books && books.length!==0){
+            - var tableheads = ['#','书号','书名','作者','出版社','价格','数量','上架日期','其他'];
+            div.table-responsive
+                table.table.table-hover
+                    thead
+                        tr
+                         -each thx in tableheads
+                          th=thx
+                    tbody
+                        -each book,i in books
+                          tr(data-popImage='/image/books/#{book.bookID}')
+                            td=i+1
+                            td
+                              a(href='/trade/books/#{book.bookID}') #{book.bookID}
+                            td=book.title
+                            td=book.author
+                            td=book.press
+                            td=book.price
+                            td=book.quantity
+                            td=book.importDate
+                            td
+                             div
+                                a.btn-link.btn-sm(href='sell/editbook/#{book.bookID}') 编辑
+                                a.btn-link.btn-sm 删除
+
+            -}else {
+            div.alert.alert-dismissible.alert-danger(role="alert")
+                button.close(data-dismiss="alert" aria-label="Close")
+                    span(aria-hidden="true") &times;
+                |您还没有销售中图书哦，点击右侧添加图书按钮即可添加。
+            -}
+        div.tab-pane.active#sellinfo()
+            div.row
+                div.col-sm-7
+                    div.panel.panel-primary
+                        div.panel-heading
+                            h3.panel-title 销售折线图
+                        div.panel-body#sellChange-chart(data-chart='#{JSON.stringify(linechart)}')
+                div.col-sm-5
+                    div.panel.panel-primary
+                        div.panel-heading
+                            h3.panel-title 周最受欢迎图书
+                        div.panel-body#pie-chart(data-chart='#{JSON.stringify(piechart)}')
+            div.panel.panel-primary
+                div.panel-heading
+                    h3.panel-title 销售记录清单
+                div.panel-body.table-responsive
+                  if(trades!=null && trades.length>0)
+                        table.table.table-striped.table-hover
+                            thead
+                                tr
+                                    th 交易号
+                                    th 书号
+                                    th 书名
+                                    th 价格
+                                    th 买家
+                                    th 交易日期
+                            tbody
+                              -each td in trades
+                                tr(data-popImage='/image/trades/#{td.tradeID}')
+                                    td #{td.tradeID}
+                                    td
+                                       a(href='/trade/books/#{td.bookID}') #{td.bookID}
+                                    td #{td.title}
+                                    td #{td.price}
+                                    td
+                                        a(href='/users/#{td.buyer}') #{td.buyer}
+                                    td #{td.tradeDate}
+                  else
+                    big.text-danger 暂无销售信息
+    script(src='https://cdn.bootcss.com/echarts/3.1.10/echarts.min.js')
+    script(src='/javascripts/selljs.js')
+    script(src='/javascripts/popImage.js')

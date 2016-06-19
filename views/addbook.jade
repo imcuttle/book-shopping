@@ -1,0 +1,69 @@
+//
+   Created by Yc on 2016/6/17.
+extends layout
+
+block content
+    div.row
+        div.col-lg-8.col-lg-offset-2
+            div.panel.panel-default
+                div.panel-body
+                    div#alert
+                    -if(code!=null) {
+                    -var cls = code===0?'alert-danger':'alert-success';
+                      div.alert(role="alert" class=cls)
+                        button.close(data-dismiss="alert" aria-label="Close")
+                            span(aria-hidden="true") &times;
+                        !=msgx.split('\n').join('<br>')
+                    -}
+                    form.form-horizontal(method='post',enctype="multipart/form-data")
+                        block part
+                        div.form-group
+                            label(for="title" class="col-sm-2 control-label") 书名
+                            div.col-sm-10
+                                input(type="text" class="form-control" name="title" id="title" placeholder="书名" required
+                                value=param?param.title:''
+                                )
+                        div.form-group
+                            label(for="author" class="col-sm-2 control-label") 作者
+                            div.col-sm-10
+                                input(type="text" class="form-control" name="author" id="author" placeholder="作者" required
+                                value=param ? param.author : ''
+                                )
+                        div.form-group
+                            label(for="press" class="col-sm-2 control-label") 出版社
+                            div.col-sm-10
+                                input(type="text" class="form-control" name="press" id="press" placeholder="出版社" required
+                                value=param ? param.press : ''
+                                )
+                        div.form-group
+                            label(for="price" class="col-sm-2 control-label") 价格
+                            div.col-sm-10
+                                div.input-group
+                                    input(type="number" class="form-control" name="price" min=0 step=0.1 id="price" placeholder="价格" required
+                                    value=param ? param.price : ''
+                                    )
+                                    span.input-group-addon 元
+                        div.form-group
+                            label(for="quantity" class="col-sm-2 control-label") 数量
+                            div.col-sm-10
+                                div.input-group
+                                    input(type="number" class="form-control" name="quantity" min=1 step=1 id="quantity" placeholder="数量" required
+                                    value=param ? param.quantity : ''
+                                    )
+                                    span.input-group-addon 本
+                        div.form-group
+                            label(for="image" class="col-sm-2 control-label") 封面
+                            div.col-sm-5
+                                input.form-control(type="file" name='image' id="image",required,
+                                value=param ? param.image: '')
+                                span.text-info#progress
+                            div.col-sm-5
+                                img.img-responsive.img-thumbnail#thumbnail(
+                                 src=param!=null && param.bookID!=null?'/image/books/#{param.bookID}':''
+                                )
+                        div.form-group
+                            div.col-sm-offset-2.col-sm-10
+                                div.text-right
+                                    input.btn.btn-primary(type='submit',value='确认')
+    script(src='/javascripts/utils.js')
+    script(src='/javascripts/addbookjs.js')

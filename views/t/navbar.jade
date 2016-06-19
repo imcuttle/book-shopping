@@ -1,0 +1,48 @@
+//
+   Created by Yc on 2016/6/16.
+-var texts = ['买书','卖书','留言'];
+-var urls = ['/','/sell','/message'];
+
+nav.navbar.navbar-default
+    div.container
+        div.navbar-header
+            a.navbar-brand.text-muted(href='/') 书窝
+            button.navbar-toggle.collapsed(data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar")
+                span.sr-only Toggle navigation
+                span.icon-bar
+                span.icon-bar
+                span.icon-bar
+        div#navbar.navbar-collapse.collapse
+
+
+            ul.nav.navbar-nav.navbar-right
+                -if(req.session!=null){
+                -if(req.session.username==null){
+                    div.navbar-form
+                     <a href="/login" class="btn btn-info">登录</a>
+                     <a href="/register" class="btn btn-info">注册</a>
+                -}else{
+                script USERNAME = '#{req.session.username}';
+                form.navbar-form.navbar-right(method='post',action='/action')
+                    div.btn-toolbar
+                        a.btn.btn-primary(style='margin-left:10px;',href='/users') 用户信息
+                        input(type='hidden',name='action',value='exit')
+                        button.btn.btn-danger(type='submit') 退出
+                div.navbar-text.navbar-right.hidden-xs.hidden-sm 欢迎您，
+                    a.navbar-link(href='/users') #{req.session.username}
+                -}}
+            ul.nav.navbar-nav.navbar-right
+                form.navbar-form(method='get',action='/search')
+                    div.form-group
+                        div.input-group
+                            input.form-control(type="text" name='content' placeholder="你想搜什么？" required)
+                            span.input-group-btn.visible-sm-block.visible-xs-block
+                                button.btn.btn-default 搜
+
+            ul.nav.navbar-nav.navbar-right
+                -for(var i=0;i<texts.length;i++){
+                - var url = urls[i],text=texts[i],cls='';
+                - if(activei!=null && i==activei){ cls='active' };
+                li(class='#{cls}')
+                    a(href='#{url}') #{text}
+                -}

@@ -1,0 +1,40 @@
+//
+   Created by Yc on 2016/6/17.
+extends layout
+
+block content
+    div.row
+        div.col-md-6
+            form.panel.panel-default(method='post')
+                div.panel-heading
+                    h3.panel-title
+                        a(href='https://www.zybuluo.com/mdeditor',target='_blank')
+                            span.text-primary Markdown
+                        |编辑区
+                div.panel-body(contenteditable="false",style='height:460px;')
+                    textarea.text-primary(id='msg',name='msg',style='width:100%;height:100%;font-size:16px;')
+                div.panel-footer
+                    div.pull-right
+                        div.btn-toolbar
+                            input.btn.btn-default(type='submit',value='提交')
+                    div.clearfix
+        div.col-md-6
+            div.panel.panel-default
+                div.panel-heading
+                    h3.panel-title 预览
+                div.panel-body.markdown-body(style='height:100%;',id='msg-show')
+    div.page-header
+        h2 留言一览
+            small(style="margin-left:10px;") 你我他想说的
+    if(msgs!=null)
+      each m in msgs
+        div.panel.panel-default
+            div.panel-heading
+                h3.panel-title
+                    a(href='/users/#{m.username}',target='_blank')
+                        span.text-primary #{m.username}
+                    small(style='margin-left:10px;') #{m.datetime}
+            div.panel-body.markdown-body(data-md='#{m.content}')
+    script(src="http://cdn.bootcss.com/marked/0.3.5/marked.min.js")
+    script(src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js")
+    script(src='/javascripts/msgjs.js')

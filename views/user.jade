@@ -1,0 +1,55 @@
+//
+   Created by Yc on 2016/6/16.
+extends layout
+
+block content
+    div.row
+        div.col-lg-6.col-lg-offset-3
+          div.panel.panel-success
+            div.panel-heading
+                h3.panel-title 基本信息
+            div.panel-body
+                -if(code!=null) {
+                -var cls = code===0?'alert-danger':'alert-success'
+                div.alert(role="alert" class=cls)
+                    button.close(data-dismiss="alert" aria-label="Close")
+                        span(aria-hidden="true") &times;
+                    !=msgx.split('\n').join('<br>')
+                -}
+                if(typeof user!='undefined')
+                    big.row
+                        span.col-xs-4 用户
+                        label.col-xs-8 #{user.username}
+                    big.row
+                        span.col-xs-4 电子邮箱
+                        label.col-xs-8 #{user.email}
+                    big.row
+                        span.col-xs-4 注册时间
+                        label.col-xs-8 #{user.registerDate}
+    if(comments!=null&&comments.length!=0)
+     div.row
+        div.col-lg-8.col-lg-offset-2
+            div.panel.panel-primary
+                div.panel-heading
+                    h3.panel-title 我的评论
+                div.panel-body.table-responsive
+                    table.table.table-condensed
+                      thead
+                        tr
+                            th #
+                            th 书号
+                            th 评论时间
+                            th 其他
+                      tbody
+                       each c,i in comments
+                        tr(data-popimage='/image/books/#{c.bookID}')
+                            td #{i+1}
+                            td
+                               a(href='/trade/books/#{c.bookID}') #{c.bookID}
+                            td #{c.datetime}
+                            td
+                               a(href='/trade/books/#{c.bookID}##{c.username}#{c.datetime}') 查看详情
+                               button.btn-link(data-delete='#{JSON.stringify(c)}',data-deleteafter='parents("tr").eq(0).remove()',data-deletewhat='comments')
+                                small.text-danger 删除
+        script(src='/javascripts/popImage.js')
+        script(src='/javascripts/Ajaxdelete.js')

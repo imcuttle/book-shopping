@@ -1,0 +1,9 @@
+//
+   Created by Yc on 2016/6/17.
+-if(msg!=null) {
+-var cls = msgcode===0?'alert-danger':'alert-success'
+div.alert.alert-dismissible(role="alert",class='#{cls}')
+  button.close(data-dismiss="alert" aria-label="Close")
+    span(aria-hidden="true") &times;
+  != msg
+-}
