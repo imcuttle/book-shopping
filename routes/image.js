@@ -6,8 +6,13 @@ var router = express.Router();
 var utils = require('../utils/index');
 var booksDB = require('../db/books');
 var tradeDB = require('../db/buyrecords');
+// var code = require('../utils/code');
 
-
+// router.get('/code',(req,res,next)=>{
+//     var ary = code();
+//     console.log(ary);
+//     res.end(ary[1]);
+// });
 
 router.get('/books/:bookID',(req,res,next)=>{
     var bookID = req.params.bookID;
