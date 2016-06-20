@@ -5,8 +5,8 @@ var booksDb = require('../db/books');
 var tradeDB = require('../db/buyrecords');
 
 var common = {};
-var recentNum = 6,
-    otherNum = (recentNum+2)<<1;
+var recentNum = 3,
+    otherNum = recentNum<<2;
 
 router.use((req,res,next)=>{
   common = {

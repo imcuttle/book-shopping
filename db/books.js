@@ -53,7 +53,7 @@ module.exports = {
     },
     getBySeller :　function (seller) {
         return newPromise((resolve,reject)=>{
-            connection.query('select * from ?? where seller=?',[table,seller],(err,rlt)=>{
+            connection.query('select * from ?? where seller=? order by importDate desc',[table,seller],(err,rlt)=>{
                 if(err) reject(err);
                 else{
                     rlt.forEach((x,i)=>{
