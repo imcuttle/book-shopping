@@ -1,0 +1,11 @@
+首先需要将mysql.sql数据库文件导入mysql
+
+该系统基于nodejs，需要安装node
+然后用命令行方式加入该系统目录，输入命令
+npm install
+自动安装本系统需要的第三方模块
+之后输入命令
+node app.js
+登录
+http://localhost:3501/即可
+（mysql用户密码需根据实际情况改变，在db/base.js中修改）
