@@ -14,6 +14,7 @@ router.use((req,res,next)=>{
     common = {
         title : '交易中心',
         subtitle : '金钱换知识的生意稳准不赔',
+        activei : 0,
         req : req
     }
     next();

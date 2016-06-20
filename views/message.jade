@@ -36,6 +36,8 @@ block content
                         span.text-primary #{m.username}
                     small(style='margin-left:10px;') #{m.datetime}
             div.panel-body.markdown-body(data-md='#{m.content}')
+    //script(src="/local/marked.min.js")
+    //script(src="/local/highlight.min.js")
     script(src="http://cdn.bootcss.com/marked/0.3.5/marked.min.js")
     script(src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js")
     script(src='/javascripts/msgjs.js')

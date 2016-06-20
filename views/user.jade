@@ -48,7 +48,7 @@ block content
                                a(href='/trade/books/#{c.bookID}') #{c.bookID}
                             td #{c.datetime}
                             td
-                               a(href='/trade/books/#{c.bookID}##{c.username}#{c.datetime}') 查看详情
+                               a(href='/trade/books/#{c.bookID}##{c.username}#{new Date(c.datetime).getTime()}') 查看详情
                                button.btn-link(data-delete='#{JSON.stringify(c)}',data-deleteafter='parents("tr").eq(0).remove()',data-deletewhat='comments')
                                 small.text-danger 删除
         script(src='/javascripts/popImage.js')

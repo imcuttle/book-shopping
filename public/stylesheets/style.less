@@ -69,6 +69,7 @@ a {
 @import "./markdown.less";
 @import "./hljs-github.min.css";
 
+.scrollY{overflow-y: scroll;}
 .blink{
   .animation(blinking 2.8s)
 }
@@ -125,7 +126,28 @@ a {
   }
 }
 
+.pre-before{
+  .text-info;
+  border-bottom:1px solid lightgrey;
+  border-left:1px solid lightgrey;
+  .btn-sm;
+  border-bottom-left-radius: 8px;
+  float: right;
+  position: relative;
+  top : -16px;
+  right: -16px;
+}
 
+#msgNum:hover{
+  opacity: 1;
+}
+#msgNum{
+  position: absolute;
+  right: 8px;
+  bottom: 10px;
+  display: inline;
+  opacity: .5;
+}
 
 .messages{
   .box-shadow(0px 0px 8px 3px #bbb);
