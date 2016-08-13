@@ -4,6 +4,7 @@ var utils = require('../utils/index');
 var booksDb = require('../db/books');
 var tradeDB = require('../db/buyrecords');
 var cmtDB = require('../db/comments');
+var fs = require('fs');
 
 function makeJsonStr(code,message) {
     return JSON.stringify({code:code,message:message});
@@ -16,6 +17,25 @@ router.use('/delete',(req,res,next)=>{
     }
     next()
 });
+
+const imagePath = require('path').resolve(__dirname, '../public/messImages')
+
+router.post('/upload/image', (req, res, next) => {
+    let body = req.body
+    let filename = Date.now()
+    let json = utils.decodeBase64Image(body.base64)
+    if(!json) res.end(makeJsonStr(500, 'error base64'));
+    else {
+        fs.writeFile(`${imagePath}/${filename}.${json.type}`, json.data, function (err) {
+            if(err){
+                console.error(err);
+                res.end(makeJsonStr(500, err.message))
+            }else {
+                res.end(makeJsonStr(200, `/messImages/${filename}.${json.type}`))
+            }
+        })
+    }
+})
 
 router.all('/delete/:what',(req,res,next)=>{
     var param = req.method=='GET'?req.query:req.body;

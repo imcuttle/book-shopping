@@ -136,18 +136,41 @@ window.onerror = null;
     });
 
     input.placeholder = ['1. 支持 MarkDown 语法','2. 自动保存','3. 支持网络多张图片粘贴'].join('\r\n\r\n');
-    input.onpaste = function (e) {
-        var clipboardData, pastedData;
+    input.onpaste = (function(){
+        var cache = {}
+        return function (e) {
+            var items, pastedData, clipboardData;
+            // Get pasted data via clipboard API
+            clipboardData = e.clipboardData || window.clipboardData;
+            items = clipboardData.items;
+            for (var index in items) {
+                var item = items[index];
+                if (item.kind === 'file') {
+                    var blob = item.getAsFile();
+                    e.preventDefault();
+                    var reader = new FileReader();
+                    reader.onload = function(event){
+                        $.post('/api/upload/image', {base64: reader.result}, function (data) {
+                            if(data.code==200) {
+                                document.execCommand('insertText', false, "![ClipboardImage]("+data.message+")");
+                            }else {
+                                document.execCommand('insertText', false, data.message);
+                            }
+                        }, 'json')
+                    }
+                    reader.readAsDataURL(blob);
+                    return
+                }
+            }
+            var text = clipboardData.getData('text/plain');
+            if(!text){
+                var img = clipboardData.getData('text/html');
+                img.replace(/<img.+src="(.+?)"/g,(m,c)=>{
+                    e.preventDefault();
+                    document.execCommand('insertText', false, "![ClipboardImage]("+c+")");
+                })
+            }
+        };
+    }())
 
-        // Get pasted data via clipboard API
-        clipboardData = e.clipboardData || window.clipboardData;
-        var text = clipboardData.getData('text/plain');
-        if(!text){
-            var img = clipboardData.getData('text/html');
-            img.replace(/<img.+src="(.+?)"/g,(m,c)=>{
-                e.preventDefault();
-                document.execCommand('insertText', false, "![ClipboardImage]("+c+")");
-            })
-        }
-    };
 })(document,window,jQuery);
