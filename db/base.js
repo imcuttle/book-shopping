@@ -3,14 +3,37 @@
  */
 var mysql = require('mysql');
 
-var connection = mysql.createConnection({
+var config = {
     host     : 'localhost',
     user     : 'root',
     password : '110114',
     database : 'shopping',
-});
+};
 
+var connection = mysql.createConnection(config);
+
+
+function handleDisconnect(connection) {
+  connection.on('error', function(err) {
+    if (!err.fatal) {
+      return;
+    }
+
+    if (err.code !== 'PROTOCOL_CONNECTION_LOST') {
+      throw err;
+    }
+
+    console.log('Re-connecting lost connection: ' + err.stack);
+
+    connection = mysql.createConnection(config);
+    handleDisconnect(connection);
+    connection.connect();
+  });
+}
+
+handleDisconnect(connection);
 connection.connect();
+
 // console.log(connection.escape("string"),connection.escape(123),connection.escape(new Date())); // value
 // console.log(connection.escapeId("dsf.date")); // id
 //

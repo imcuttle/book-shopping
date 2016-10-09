@@ -12,7 +12,7 @@ function newPromise(excutor) {
 var sFilter = connection.likeStrFilter;
 
 module.exports = {
-    newBookID : function (cb) {
+    newBookID: function (cb) {
         var self = arguments.callee;
         function create() {
             return 'BK'+(Math.random()*1000000).toFixed(0);
@@ -25,7 +25,7 @@ module.exports = {
                 else cb(id);
         })
     },
-    checkByIDName:function (bookID,seller) {
+    checkByIDName: function (bookID,seller) {
         return newPromise((resolve,reject)=>{
             connection.query('select * from ?? where bookID=? and seller=?',[table,bookID,seller],
                 (err,rlt)=>{
@@ -34,7 +34,7 @@ module.exports = {
                 })
         })
     },
-    checkIsExist : function (bookID) {
+    checkIsExist: function (bookID) {
         return newPromise((resolve,reject)=>{
             connection.query('select * from ?? where bookID=?',[table,bookID],(err,rlt)=>{
                 if(err) reject(err);
@@ -148,7 +148,7 @@ module.exports = {
             });
         });
     },
-    getOthersRecent : function (selfname,n) {
+    getOthersRecent: function (selfname,n) {
         return newPromise((resolve,reject)=>{
             var sql = '',arr;
             if(!!selfname){
@@ -230,6 +230,6 @@ module.exports = {
                     }
                 })
         })
-    },
+    }
 
 }
