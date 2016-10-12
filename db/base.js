@@ -19,11 +19,12 @@ function handleDisconnect(connection) {
       return;
     }
 
-    if (err.code !== 'PROTOCOL_CONNECTION_LOST') {
-      throw err;
-    }
+    // if (err.code !== 'PROTOCOL_CONNECTION_LOST') {
+    //   throw err;
+    // }
 
-    console.log('Re-connecting lost connection: ' + err.stack);
+    console.error('Re-connecting lost connection: ' + err.stack);
+    connection.end();
 
     connection = mysql.createConnection(config);
     handleDisconnect(connection);
