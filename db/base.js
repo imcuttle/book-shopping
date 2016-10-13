@@ -15,9 +15,9 @@ var connection = mysql.createConnection(config);
 
 function handleDisconnect(connection) {
   connection.on('error', function(err) {
-    if (!err.fatal) {
+   /* if (!err.fatal) {
       return;
-    }
+    }*/
 
     // if (err.code !== 'PROTOCOL_CONNECTION_LOST') {
     //   throw err;
