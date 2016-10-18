@@ -8,20 +8,27 @@ var config = {
     user     : 'root',
     password : '110114',
     database : 'shopping',
+    // queueLimit: 50,
+    // connectionLimit: 20,
+    // waitForConnections: false
 };
 
+
+var database = mysql.createPool(config);
+
+
+
+/*
 var connection = mysql.createConnection(config);
-
-
 function handleDisconnect(connection) {
   connection.on('error', function(err) {
-   /* if (!err.fatal) {
+    if (!err.fatal) {
       return;
-    }*/
+    }
 
-    // if (err.code !== 'PROTOCOL_CONNECTION_LOST') {
-    //   throw err;
-    // }
+    if (err.code !== 'PROTOCOL_CONNECTION_LOST') {
+      throw err;
+    }
 
     console.error('Re-connecting lost connection: ' + err.stack);
     connection.end();
@@ -34,7 +41,7 @@ function handleDisconnect(connection) {
 
 handleDisconnect(connection);
 connection.connect();
-
+*/
 // console.log(connection.escape("string"),connection.escape(123),connection.escape(new Date())); // value
 // console.log(connection.escapeId("dsf.date")); // id
 //
@@ -42,11 +49,26 @@ connection.connect();
 // var inserts = ['users', 'id', 'xxx'];
 // sql = mysql.format(sql, inserts);
 // console.log(sql);
-connection.format = mysql.format;
-connection.likeStrFilter = function (s) {
+
+
+module.exports = {
+  query: function() {
+    var argArr = Array.from(arguments);
+    var cb = argArr.splice(-1)[0];
+    
+    database.getConnection(function(err, dbConnection) {
+      if (err) { /* do something */ return }
+      dbConnection.query.apply(dbConnection, argArr.concat(function() {
+        dbConnection.release(); // return to the pool
+        cb.apply(null, Array.from(arguments));
+      }));
+    })
+  },
+  format: mysql.format,
+  likeStrFilter: function (s) {
     return '%'+s.replace(/([_%])/g,'*'+RegExp.$1)+'%';
-}
-module.exports = connection;
+  }
+};
 
 //
 // connection.query('SELECT username from users', function(err, rows, fields) {
