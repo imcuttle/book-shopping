@@ -106,7 +106,7 @@ function postBuyBook(bookID,username,res,req) {
                                     rlt[0].quantity,rlt[0].image,rlt[0].seller)
                                     .then(x=>{
                                         rlt[0].quantity--;
-                                        res.render('buyBook',utils.extend(common,{
+                                        res.render('buybook',utils.extend(common,{
                                             msgcode:1,
                                             msg: '你已经成功购买'+bookID+'书籍',
                                             book : rlt[0]
@@ -114,7 +114,7 @@ function postBuyBook(bookID,username,res,req) {
                                     });
                             });
                     else{
-                        res.render('buyBook',utils.extend(common,{
+                        res.render('buybook',utils.extend(common,{
                             msgcode:0,
                             msg: bookID+'书籍库存已不足',
                             book : rlt[0]
@@ -148,7 +148,7 @@ router.get('/books/:bookID',(req,res,next)=>{
                             req :req
                         });
                     }else{
-                        res.render('buyBook',utils.extend(common,{
+                        res.render('buybook',utils.extend(common,{
                             book : rlt[0]
                         }));
                     }
