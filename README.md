@@ -106,7 +106,7 @@
 |seller|varchar(12)|卖家|
 
 #### E-R图
-![ER](http://moyuyc.github.io/images/ER.png)
+![ER](./public/images/ER.png)
 
 ### 服务器框架选择和设计
 #### 选择与原因
@@ -123,7 +123,7 @@
 
 #### 结构设计
 ##### 文件结构
-![files](http://moyuyc.github.io/images/files.png) 
+![files](./public/images/files.png) 
 `db/` 所有数据库操作代码
 `public/` 静态资源库，如js,css
 `routes/` 路由操作diam，对应url
@@ -134,11 +134,11 @@
 
 ##### 部分数据流图
 - 用户留言
-![用户留言](http://moyuyc.github.io/images/datastream3.png)
+![用户留言](./public/images/datastream3.png)
 - 卖家添加图书
-![卖家添加图书](http://moyuyc.github.io/images/datastream1.png)
+![卖家添加图书](./public/images/datastream1.png)
 - 买家购书
-![买家购书](http://moyuyc.github.io/images/datastream2.png)
+![买家购书](./public/images/datastream2.png)
 
 ##### 部分算法设计
 首先对于留言评论，防止恶意用户刷留言评论，设置了定时销毁器。
@@ -250,7 +250,7 @@ public/
 `stylesheets/`文件夹放的是样式文件，其中的`style.less`是入口，`style.css`是利用node模块压缩后真正传送的样式文件
 #### 特殊功能说明
 1. 提示框动态固定显示
-![msg.png](http://moyuyc.github.io/images/msg.png)
+![msg.png](./public/images/msg.png)
 方法一：（固定width）
 ```less
 .messages{
@@ -308,7 +308,7 @@ window.onload = function () {
 ```
 
 2. 跳至评论，评论区高亮
-![blink.png](http://moyuyc.github.io/images/blink.png)
+![blink.png](./public/images/blink.png)
 ```less
 @keyframes blinking {
     0% {
@@ -353,30 +353,30 @@ input.onpaste = function (e) {
     };
 ```
 4. 代码段右上角显示语言
-![prebefore.png](http://moyuyc.github.io/images/prebefore.png)
+![prebefore.png](./public/images/prebefore.png)
 
 ---
 
 ## 系统截图
-![png](http://moyuyc.github.io/images/p1.png)
+![png](./public/images/p1.png)
 
-![png](http://moyuyc.github.io/images/p2.png)
+![png](./public/images/p2.png)
 
-![png](http://moyuyc.github.io/images/p3.png)
+![png](./public/images/p3.png)
 
-![png](http://moyuyc.github.io/images/p4.png)
+![png](./public/images/p4.png)
 
-![png](http://moyuyc.github.io/images/p5.png)
+![png](./public/images/p5.png)
 
-![png](http://moyuyc.github.io/images/p6.png)
+![png](./public/images/p6.png)
 
-![png](http://moyuyc.github.io/images/p7.png)
+![png](./public/images/p7.png)
 
-![png](http://moyuyc.github.io/images/p8.png)
+![png](./public/images/p8.png)
 
-![png](http://moyuyc.github.io/images/p9.png)
+![png](./public/images/p9.png)
 
-![png](http://moyuyc.github.io/images/p10.png)
+![png](./public/images/p10.png)
 
 ---
 ## 收获与体会
